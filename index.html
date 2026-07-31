@@ -198,7 +198,12 @@
       line-height: 1.85;
       color: var(--ink);
     }
+    .letter-body p { white-space: pre-line; }
     .letter-body p + p { margin-top: 1rem; }
+    .letter-body p.poem {
+      font-style: italic;
+      color: var(--muted);
+    }
     .letter-stickers-inline {
       display: flex; gap: 0.8rem; justify-content: center;
       margin: 1.4rem 0;
@@ -613,8 +618,9 @@
     paragraphs: [
       "Words have never really been my strong suit, so instead I built you this little corner of the internet — a song, a few pictures, and the things I feel most but say the least.",
       "Thank you for turning my noisy days quiet and my quiet days golden. For every late-night conversation, every joke that shouldn't have been funny, and for reaching for me before I even ask.",
-      "I hope today wraps around you soft and warm, made entirely of you. I hope you feel just a piece of how deeply you're loved. And even on the days I don't say it out loud — know that you're the one I keep choosing, again and again."
+      "There are three hours of highway between your morning and mine,\nyet somehow your name still gets here first.\nI've learned to love you in small increments —\na good morning text, the sound of your voice through a screen,\na drive I've memorized before I've even left.\n\nBut the distance was never the whole story.\nIt's only the part before the part\nwhere I get to hold you again.\nSo until then — every mile is just one more reason\nI'm counting down to you."
     ],
+    poemParagraphIndex: 2,                      // which paragraph (0 = first) should be styled like a poem
     stickersAfterParagraph: 1,                 // the little emoji row appears after this paragraph number
     stickers: ['🧺', '🌿', '🥚'],
     signature: 'ILYSM 🩷',
@@ -717,6 +723,7 @@
     body.classList.add('shown');
     for (let idx = 0; idx < LETTER_CONTENT.paragraphs.length; idx++) {
       const p = document.createElement('p');
+      if (idx === LETTER_CONTENT.poemParagraphIndex) p.classList.add('poem');
       body.appendChild(p);
       await typeParagraph(p, LETTER_CONTENT.paragraphs[idx], LETTER_CONTENT.typingSpeed);
       if (idx + 1 === LETTER_CONTENT.stickersAfterParagraph) {
